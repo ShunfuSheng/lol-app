@@ -13,9 +13,7 @@ export default {
     },
   },
 
-  effects: {
-  },
+  effects: {},
 
-  subscriptions: {
-  },
+  subscriptions: {},
 }

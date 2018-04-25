@@ -9,7 +9,6 @@ const isPushAction = action =>
   action.type === NavigationActions.NAVIGATE ||
   action.type === NavigationActions.PUSH
 
-
 /**
  * 通过之前的路由组件中提供的获取路由信息初始化到state中，effects中监听NavigationActions，然后
  * 调用apply来更新路由信息，最后又因为我们将路由信息链接到路由组件，所以就会有UI页面的切换

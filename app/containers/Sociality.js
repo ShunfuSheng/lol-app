@@ -1,15 +1,22 @@
 import React, { Component } from 'react'
-import { StyleSheet, View, Image, Text, ImageBackground, SectionList, ScrollView } from 'react-native'
+import {
+  StyleSheet,
+  View,
+  Image,
+  Text,
+  ImageBackground,
+  SectionList,
+  ScrollView,
+} from 'react-native'
 import { connect } from 'react-redux'
 import BaseComponent from '../components/BaseComponent'
-import { createAction } from '../utils';
-
+import { createAction } from '../utils'
 
 @connect(({ sociality }) => ({ ...sociality }))
 class Sociality extends BaseComponent {
   constructor(props) {
-    super(props);
-    this.initData();
+    super(props)
+    this.initData()
   }
 
   static navigationOptions = {
@@ -24,28 +31,39 @@ class Sociality extends BaseComponent {
     // 底部Tab切换中间件
     tabBarOnPress: ({ previousScene, scene, jumpToIndex }) => {
       // alert(scene.route.routeName);
-      jumpToIndex(scene.index);
-    }
+      jumpToIndex(scene.index)
+    },
   }
 
   render() {
-    const { commentData } = this.props;
+    const { commentData } = this.props
     return (
       <ScrollView style={styles.container}>
         <View style={styles.header}>
           {/* 头部 */}
           <View style={styles.title}>
             <Text style={{ fontSize: 20, color: '#000' }}>正在热议</Text>
-            <Image style={{ width: 20 }} source={require('../images/angle-right.png')} />
+            <Image
+              style={{ width: 20 }}
+              source={require('../images/angle-right.png')}
+            />
           </View>
           {/* banner区域 */}
           <View>
-            <Image style={{ width: '100%', borderRadius: 8 }} source={require('../images/1.png')} />
+            <Image
+              style={{ width: '100%', borderRadius: 8 }}
+              source={require('../images/1.png')}
+            />
           </View>
           {/* 话题区域 */}
           <View style={styles.hotTopic}>
             <View style={styles.topicItem}>
-              <View style={[styles.iconBefore, { backgroundColor: 'red', borderColor: 'red' }]}>
+              <View
+                style={[
+                  styles.iconBefore,
+                  { backgroundColor: 'red', borderColor: 'red' },
+                ]}
+              >
                 <View style={styles.txtWrap}>
                   <Text style={styles.iconBeforeTxt}>#</Text>
                 </View>
@@ -53,7 +71,12 @@ class Sociality extends BaseComponent {
               <Text style={styles.topicTitle}>刀妹COS创意大赛</Text>
             </View>
             <View style={styles.topicItem}>
-              <View style={[styles.iconBefore, { backgroundColor: 'orangered', borderColor: 'orangered' }]}>
+              <View
+                style={[
+                  styles.iconBefore,
+                  { backgroundColor: 'orangered', borderColor: 'orangered' },
+                ]}
+              >
                 <View style={styles.txtWrap}>
                   <Text style={styles.iconBeforeTxt}>#</Text>
                 </View>
@@ -61,7 +84,12 @@ class Sociality extends BaseComponent {
               <Text style={styles.topicTitle}>LOL我们回来啦！</Text>
             </View>
             <View style={styles.topicItem}>
-              <View style={[styles.iconBefore, { backgroundColor: 'orange', borderColor: 'orange' }]}>
+              <View
+                style={[
+                  styles.iconBefore,
+                  { backgroundColor: 'orange', borderColor: 'orange' },
+                ]}
+              >
                 <View style={styles.txtWrap}>
                   <Text style={styles.iconBeforeTxt}>#</Text>
                 </View>
@@ -69,7 +97,12 @@ class Sociality extends BaseComponent {
               <Text style={styles.topicTitle}>勇气与信念互换贴</Text>
             </View>
             <View style={styles.topicItem}>
-              <View style={[styles.iconBefore, { backgroundColor: 'gray', borderColor: 'gray' }]}>
+              <View
+                style={[
+                  styles.iconBefore,
+                  { backgroundColor: 'gray', borderColor: 'gray' },
+                ]}
+              >
                 <View style={styles.txtWrap}>
                   <Text style={styles.iconBeforeTxt}>#</Text>
                 </View>
@@ -79,27 +112,47 @@ class Sociality extends BaseComponent {
           </View>
           {/* 分类区域 */}
           <View style={styles.category}>
-            <ImageBackground style={styles.categoryItem} source={require('../images/backend.png')} resizeMode='cover'>
+            <ImageBackground
+              style={styles.categoryItem}
+              source={require('../images/backend.png')}
+              resizeMode="cover"
+            >
               <View style={styles.shadow}>
                 <Text style={styles.categoryTitle}>英雄攻略</Text>
               </View>
             </ImageBackground>
-            <ImageBackground style={styles.categoryItem} source={require('../images/backend.png')} resizeMode='cover'>
+            <ImageBackground
+              style={styles.categoryItem}
+              source={require('../images/backend.png')}
+              resizeMode="cover"
+            >
               <View style={styles.shadow}>
                 <Text style={styles.categoryTitle}>大区talk</Text>
               </View>
             </ImageBackground>
-            <ImageBackground style={styles.categoryItem} source={require('../images/backend.png')} resizeMode='cover'>
+            <ImageBackground
+              style={styles.categoryItem}
+              source={require('../images/backend.png')}
+              resizeMode="cover"
+            >
               <View style={styles.shadow}>
                 <Text style={styles.categoryTitle}>萌次元</Text>
               </View>
             </ImageBackground>
-            <ImageBackground style={styles.categoryItem} source={require('../images/backend.png')} resizeMode='cover'>
+            <ImageBackground
+              style={styles.categoryItem}
+              source={require('../images/backend.png')}
+              resizeMode="cover"
+            >
               <View style={styles.shadow}>
                 <Text style={styles.categoryTitle}>萌友杂谈</Text>
               </View>
             </ImageBackground>
-            <ImageBackground style={styles.categoryItem} source={require('../images/backend.png')} resizeMode='cover'>
+            <ImageBackground
+              style={styles.categoryItem}
+              source={require('../images/backend.png')}
+              resizeMode="cover"
+            >
               <View style={styles.shadow}>
                 <Text style={styles.categoryTitle}>全部分类</Text>
               </View>
@@ -113,22 +166,55 @@ class Sociality extends BaseComponent {
               <View style={styles.commentItem}>
                 <View style={styles.itemHead}>
                   <View style={styles.hh}>
-                    <Image style={styles.avatar} source={require('../images/use-avatar.jpg')} resizeMode="cover" />
+                    <Image
+                      style={styles.avatar}
+                      source={require('../images/use-avatar.jpg')}
+                      resizeMode="cover"
+                    />
                     <View>
-                      <Text style={{ fontSize: 16, color: '#333' }}>{item.name}</Text>
+                      <Text style={{ fontSize: 16, color: '#333' }}>
+                        {item.name}
+                      </Text>
                       <View style={styles.itemSubTitle}>
-                        {item.gender === 'man' ?
-                          <Image style={styles.gender} source={require('../images/man.png')} resizeMode="cover" /> :
-                          <Image style={styles.gender} source={require('../images/woman.png')} resizeMode="cover" />
-                        }
-                        <View style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)', marginRight: 8 }}>
-                          <Text style={{ color: '#EEB422', fontSize: 12, fontWeight: 'bold' }}>{item.level}</Text>
+                        {item.gender === 'man' ? (
+                          <Image
+                            style={styles.gender}
+                            source={require('../images/man.png')}
+                            resizeMode="cover"
+                          />
+                        ) : (
+                          <Image
+                            style={styles.gender}
+                            source={require('../images/woman.png')}
+                            resizeMode="cover"
+                          />
+                        )}
+                        <View
+                          style={{
+                            backgroundColor: 'rgba(0, 0, 0, 0.1)',
+                            marginRight: 8,
+                          }}
+                        >
+                          <Text
+                            style={{
+                              color: '#EEB422',
+                              fontSize: 12,
+                              fontWeight: 'bold',
+                            }}
+                          >
+                            {item.level}
+                          </Text>
                         </View>
-                        <Text style={{ fontSize: 16, color: 'gray' }}>{item.lastLogin}</Text>
+                        <Text style={{ fontSize: 16, color: 'gray' }}>
+                          {item.lastLogin}
+                        </Text>
                       </View>
                     </View>
                   </View>
-                  <Image style={{ width: 14 }} source={require('../images/angle-down.png')} />
+                  <Image
+                    style={{ width: 14 }}
+                    source={require('../images/angle-down.png')}
+                  />
                 </View>
                 <View style={styles.itemBody}>
                   <Text style={styles.article}>{item.content}</Text>
@@ -140,7 +226,9 @@ class Sociality extends BaseComponent {
                 <Text style={{ fontSize: 20, color: '#000' }}>萌友说</Text>
                 <View style={styles.pullRight}>
                   <Text style={{ fontSize: 16, color: '#333' }}>综合排序</Text>
-                  <View style={styles.cicleDown}><Text style={{ fontSize: 10, color: '#fff' }}>∨</Text></View>
+                  <View style={styles.cicleDown}>
+                    <Text style={{ fontSize: 10, color: '#fff' }}>∨</Text>
+                  </View>
                 </View>
               </View>
             )}
@@ -303,6 +391,5 @@ const styles = StyleSheet.create({
     lineHeight: 36,
   },
 })
-
 
 export default Sociality

@@ -6,7 +6,7 @@ import Router, { routerMiddleware } from './router'
 
 import appModel from './models/app'
 import homeModel from './models/home'
-import socialityModel from './models/sociality';
+import socialityModel from './models/sociality'
 import routerModel from './models/router'
 
 const app = dva({

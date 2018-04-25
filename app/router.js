@@ -54,7 +54,7 @@ const AppNavigator = StackNavigator(
     headerMode: 'none',
     navigationOptions: {
       gesturesEnabled: false,
-    }
+    },
   }
 )
 

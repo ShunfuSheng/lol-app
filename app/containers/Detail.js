@@ -3,24 +3,21 @@ import { StyleSheet, View, Text } from 'react-native'
 import { connect } from 'react-redux'
 import BaseComponent from '../components/BaseComponent'
 
-
 @connect(({ home }) => ({ ...home }))
 class Detail extends BaseComponent {
   constructor(props) {
-    super(props);
-    this.initData();
+    super(props)
+    this.initData()
   }
-  
+
   static navigationOptions = {
     title: '详情',
   }
 
   render() {
-    const { params } = this.props.navigation.state;
-    const { listData } = this.props;
-    let data = listData.find((item, index) => {
-      return item.key == params.id;
-    });
+    const { params } = this.props.navigation.state
+    const { listData } = this.props
+    const data = listData.find((item, index) => item.key == params.id)
     return (
       <View style={styles.container}>
         <View style={styles.header}>
@@ -68,7 +65,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#000',
     lineHeight: 36,
-  }
+  },
 })
 
 export default Detail
