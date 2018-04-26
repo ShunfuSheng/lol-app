@@ -4,18 +4,20 @@ import {
   View,
   Image,
   Text,
-  ImageBackground,
   SectionList,
   ScrollView,
   TouchableHighlight,
   TouchableOpacity,
   Modal,
-  findNodeHandle
+  findNodeHandle,
+  RefreshControl
 } from 'react-native'
 import { UIManager } from 'NativeModules'
 import { connect } from 'react-redux'
 import BaseComponent from '../components/BaseComponent'
 import FixedTitle from '../components/FixedTitle'
+import SocialityTopic from '../components/SocialityTopic'
+import SocialityCategory from '../components/SocialityCategory'
 import { createAction } from '../utils'
 
 @connect(({ sociality }) => ({ ...sociality }))
@@ -64,19 +66,38 @@ class Sociality extends BaseComponent {
     this.setState({ modalVisible: visible });
   }
 
+  // 点击帖子操作处理
   pressHandle = (nativeEvent, id) => {
+    let pageY = 0;
+    if(nativeEvent.pageY > 520) {
+      pageY = Math.floor(nativeEvent.pageY) - 110;
+    }else {
+      pageY = Math.floor(nativeEvent.pageY) + 10;
+    }
     this.setState({
       modalVisible: true,
-      boxPosition: Math.floor(nativeEvent.pageY),
+      boxPosition: pageY,
       currentId: id
     });
   }
 
+  // 上拉刷新处理
+  _onRefresh = () => {
+    const { dispatch } = this.props;
+    dispatch({type: 'sociality/fetch', payload: {}});
+  }
+
   render() {
-    const { commentData } = this.props
+    const { commentData, topicList, categoryList, refreshing } = this.props;
     return (
       <View style={styles.container}>
-        <ScrollView style={styles.container} onScroll={this.scrollHandle}>
+        <ScrollView
+          style={styles.container}
+          onScroll={this.scrollHandle}
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={this._onRefresh} />
+          }
+        >
           <View style={styles.header}>
             {/* 头部 */}
             <View style={styles.title}>
@@ -94,108 +115,9 @@ class Sociality extends BaseComponent {
               />
             </View>
             {/* 话题区域 */}
-            <View style={styles.hotTopic}>
-              <View style={styles.topicItem}>
-                <View
-                  style={[
-                    styles.iconBefore,
-                    { backgroundColor: 'red', borderColor: 'red' },
-                  ]}
-                >
-                  <View style={styles.txtWrap}>
-                    <Text style={styles.iconBeforeTxt}>#</Text>
-                  </View>
-                </View>
-                <Text style={styles.topicTitle}>刀妹COS创意大赛</Text>
-              </View>
-              <View style={styles.topicItem}>
-                <View
-                  style={[
-                    styles.iconBefore,
-                    { backgroundColor: 'orangered', borderColor: 'orangered' },
-                  ]}
-                >
-                  <View style={styles.txtWrap}>
-                    <Text style={styles.iconBeforeTxt}>#</Text>
-                  </View>
-                </View>
-                <Text style={styles.topicTitle}>LOL我们回来啦！</Text>
-              </View>
-              <View style={styles.topicItem}>
-                <View
-                  style={[
-                    styles.iconBefore,
-                    { backgroundColor: 'orange', borderColor: 'orange' },
-                  ]}
-                >
-                  <View style={styles.txtWrap}>
-                    <Text style={styles.iconBeforeTxt}>#</Text>
-                  </View>
-                </View>
-                <Text style={styles.topicTitle}>勇气与信念互换贴</Text>
-              </View>
-              <View style={styles.topicItem}>
-                <View
-                  style={[
-                    styles.iconBefore,
-                    { backgroundColor: 'gray', borderColor: 'gray' },
-                  ]}
-                >
-                  <View style={styles.txtWrap}>
-                    <Text style={styles.iconBeforeTxt}>#</Text>
-                  </View>
-                </View>
-                <Text style={styles.topicTitle}>查看更多话题</Text>
-              </View>
-            </View>
+            <SocialityTopic data={topicList} />
             {/* 分类区域 */}
-            <View style={styles.category}>
-              <ImageBackground
-                style={styles.categoryItem}
-                source={require('../images/backend.png')}
-                resizeMode="cover"
-              >
-                <View style={styles.shadow}>
-                  <Text style={styles.categoryTitle}>英雄攻略</Text>
-                </View>
-              </ImageBackground>
-              <ImageBackground
-                style={styles.categoryItem}
-                source={require('../images/backend.png')}
-                resizeMode="cover"
-              >
-                <View style={styles.shadow}>
-                  <Text style={styles.categoryTitle}>大区talk</Text>
-                </View>
-              </ImageBackground>
-              <ImageBackground
-                style={styles.categoryItem}
-                source={require('../images/backend.png')}
-                resizeMode="cover"
-              >
-                <View style={styles.shadow}>
-                  <Text style={styles.categoryTitle}>萌次元</Text>
-                </View>
-              </ImageBackground>
-              <ImageBackground
-                style={styles.categoryItem}
-                source={require('../images/backend.png')}
-                resizeMode="cover"
-              >
-                <View style={styles.shadow}>
-                  <Text style={styles.categoryTitle}>萌友杂谈</Text>
-                </View>
-              </ImageBackground>
-              <ImageBackground
-                style={styles.categoryItem}
-                source={require('../images/backend.png')}
-                resizeMode="cover"
-              >
-                <View style={styles.shadow}>
-                  <Text style={styles.categoryTitle}>全部分类</Text>
-                </View>
-              </ImageBackground>
-            </View>
+            <SocialityCategory data={categoryList} />
           </View>
           {/* 评论模块 */}
           <View>
@@ -259,7 +181,7 @@ class Sociality extends BaseComponent {
           <TouchableHighlight onPress={() => {this.setModalVisible(!this.state.modalVisible)}}>
             <View style={styles.modalWrap}></View>
           </TouchableHighlight>
-          <View style={styles.popover}>
+          <View style={[styles.popover, {top: this.state.boxPosition}]}>
             <TouchableOpacity onPress={() => alert('帖子ID: ' + this.state.currentId)}>
               <View style={{paddingTop: 10, paddingBottom: 10, borderColor: 'gainsboro', borderBottomWidth: 1}}>
                 <Text style={{fontSize: 20}}>不感兴趣</Text>
@@ -297,69 +219,6 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     paddingBottom: 15,
     justifyContent: 'space-between',
-  },
-  hotTopic: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    paddingTop: 15,
-    borderBottomWidth: 1,
-    borderStyle: 'solid',
-    borderColor: 'gainsboro',
-  },
-  topicItem: {
-    width: '50%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 15,
-  },
-  iconBefore: {
-    width: 26,
-    height: 26,
-    borderWidth: 1,
-    borderStyle: 'solid',
-    marginRight: 10,
-  },
-  txtWrap: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderStyle: 'solid',
-    borderColor: 'yellow',
-  },
-  iconBeforeTxt: {
-    color: '#fff',
-    fontSize: 20,
-    includeFontPadding: false,
-  },
-  topicTitle: {
-    fontSize: 16,
-    color: '#000',
-  },
-  category: {
-    paddingTop: 10,
-    paddingBottom: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  categoryItem: {
-    width: 72,
-    height: 72,
-    borderRadius: 10,
-    overflow: 'hidden',
-  },
-  shadow: {
-    flex: 1,
-    flexDirection: 'row',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    justifyContent: 'center',
-    alignItems: 'flex-end',
-    paddingBottom: 15,
-  },
-  categoryTitle: {
-    fontSize: 14,
-    color: '#fff',
-    fontWeight: 'bold',
   },
   commentItem: {
     backgroundColor: '#fff',
@@ -420,7 +279,6 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     paddingRight: 10,
     position: 'absolute',
-    top: 100,
     right: 10,
   }
 })
