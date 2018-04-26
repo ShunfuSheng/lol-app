@@ -7,7 +7,7 @@ class BaseComponent extends Component {
     // alert(currentScreen);
     switch (currentScreen) {
       case 'Home':
-        this.props.dispatch(createAction('home/fetch')({}))
+        this.props.dispatch(createAction('home/fetch')({page: 0}))
         break
       case 'Detail':
         this.props.dispatch(createAction('home/fetch')({}))

@@ -6,11 +6,12 @@ import {
   Text,
   FlatList,
   TouchableWithoutFeedback,
+  ActivityIndicator,
 } from 'react-native'
 import Swiper from 'react-native-swiper'
 import { connect } from 'react-redux'
 import BaseComponent from '../components/BaseComponent'
-import { NavigationActions } from '../utils'
+import { NavigationActions, createAction } from '../utils'
 
 @connect(({ home }) => ({ ...home }))
 class Home extends BaseComponent {
@@ -36,8 +37,15 @@ class Home extends BaseComponent {
     )
   }
 
+  _onEndReached = (info) => {
+    const { dispatch, page, loading, isEnd } = this.props;
+    if (!loading && !isEnd) {
+      dispatch(createAction('home/fetch')({ page: page + 1 }));
+    }
+  }
+
   render() {
-    const { listData } = this.props
+    const { listData, loading, isEnd } = this.props;
     return (
       <View style={styles.container}>
         <View style={styles.wrapper}>
@@ -70,6 +78,19 @@ class Home extends BaseComponent {
         <FlatList
           data={listData}
           keyExtractor={item => item.id}
+          onEndReached={this._onEndReached}
+          onEndReachedThreshold={0.02}
+          ListFooterComponent={() => (
+            isEnd ? (
+              <View style={styles.show}>
+                <Text style={{ fontSize: 28 }}>已经到底了！</Text>
+              </View>
+            ) : (
+                <View style={loading ? styles.show : styles.hide}>
+                  <ActivityIndicator size="large" color="#00ff00" />
+                </View>
+              )
+          )}
           renderItem={({ item }) => (
             <TouchableWithoutFeedback
               onPress={() => {
@@ -155,6 +176,18 @@ const styles = StyleSheet.create({
     width: '30%',
     paddingLeft: 10,
   },
+  show: {
+    alignItems: 'center',
+    paddingTop: 5,
+    paddingBottom: 5,
+    opacity: 1,
+  },
+  hide: {
+    alignItems: 'center',
+    paddingTop: 5,
+    paddingBottom: 5,
+    opacity: 0,
+  }
 })
 
 export default Home

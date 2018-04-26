@@ -26,7 +26,7 @@ export default {
   effects: {
     *fetch({ payload }, { call, put }) {
       yield put(createAction('save')({ refreshing: true }))
-      const { data } = yield call(httpGet, 'https://www.christophere.com/league-of-legends/v1/get_comment')
+      const { data } = yield call(httpGet, 'https://www.christophere.com/api/league-of-legends/v1/get_comment')
       // 模拟网络延迟3s时间
       sleep(3000);
       yield put(createAction('save')({ commentData: data, refreshing: false }))

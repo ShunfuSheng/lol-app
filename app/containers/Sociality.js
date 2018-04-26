@@ -84,7 +84,7 @@ class Sociality extends BaseComponent {
   // 上拉刷新处理
   _onRefresh = () => {
     const { dispatch } = this.props;
-    dispatch({type: 'sociality/fetch', payload: {}});
+    dispatch(createAction('sociality/fetch')({}));
   }
 
   render() {
