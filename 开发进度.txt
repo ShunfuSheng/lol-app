@@ -1,0 +1,12 @@
+http://facebook.github.io/react-native/docs/activityindicator.html
+https://reactnative.cn/docs/0.51/flatlist.html#content
+https://reactnavigation.org/docs/tab-navigator.html
+https://github.com/jondot/awesome-react-native#components
+
+
+
+
+Bug：
+react-native + dva 底部导航栏切换时数据的刷新问题
+萌友界面遮罩层出现时长按出现黑屏现象
+
